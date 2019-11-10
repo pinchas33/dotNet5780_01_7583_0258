@@ -10,6 +10,7 @@ namespace dotNet5780_01_7583_0258
     {
         static void Main(string[] args)
         {
+            int aa = 7;
         }
     }
 }
