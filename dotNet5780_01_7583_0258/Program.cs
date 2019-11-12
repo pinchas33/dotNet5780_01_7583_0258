@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace dotNet5780_01_7583_0258
+namespace part1
 {
     class Program
     {
@@ -38,8 +38,6 @@ namespace dotNet5780_01_7583_0258
             Print(A);
             Print(B);
             Print(C);
-
-            Console.ReadKey();
         }
     }
 }
