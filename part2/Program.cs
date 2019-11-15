@@ -1,9 +1,11 @@
-﻿using System;
+﻿//this program manages a calendar of holiday orders
+//students names: pinchas rozenberg, ID: 206190258. yaakov gottlieb, ID: 318807583
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 
 namespace part2
 {
@@ -13,12 +15,14 @@ namespace part2
         static private int numOfOrderedDays = 0;
 
         static private bool SetDate(DateTime startDate, int numOfDays)
-        {
-            for (int i = 1; i < numOfDays; i++) //אני משנה: במקום "(int i = 1; i < numOfDays; i++)" אני רושם:
+        {       //this function sets an order in given date and number days from user
+            calendar[startDate.Month - 1, startDate.Day - 1] = numOfDays == 1 ? true : false;   //in case user ordered 1 day
+
+            for (int i = 0; i < numOfDays - 1; i++)
             {
-                if (!calendar[startDate.Month - 1 + (startDate.Day + i - 1) / 31, (startDate.Day + i - 1) % 31])
+                if (!calendar[startDate.Month - 1 + (startDate.Day + i) / 31, (startDate.Day + i) % 31])
                 {
-                    calendar[startDate.Month - 1 + (startDate.Day + i - 1) / 31, (startDate.Day + i - 1) % 31] = true;
+                    calendar[startDate.Month - 1 + (startDate.Day + i) / 31, (startDate.Day + i) % 31] = true;
                 }
                 else
                 {
@@ -29,48 +33,49 @@ namespace part2
         }
 
         static private void Order()
-        {
+        {       //this function gets details from the user about the holiday 
             DateTime startDate;
             int numOfDays;
 
             Console.WriteLine("Enter a date:");
             DateTime.TryParse(Console.ReadLine(), out startDate); 
-             Console.WriteLine("Enter a number of days:");
+            Console.WriteLine("Enter a number of days:");
             int.TryParse(Console.ReadLine(), out numOfDays);
+
             numOfOrderedDays += numOfDays;
             
             if(SetDate(startDate, numOfDays))
             {
-                Console.WriteLine("good");
+                Console.WriteLine("Your request was accepted");
             }
             else
             {
-                Console.WriteLine("not good");
+                Console.WriteLine("Your request was rejected");
             }
-            Console.ReadKey();
         }
 
         static private void PrintOrderedDates()
-        {
+        {       //this function prints all ordered dates
             int daysCounter = 0;
-            int month = 0, day = 0;
+            int firstMonth = 0, firstDay = 0;
 
             for(int i = 0; i < 12; i++)
             {
                 for(int j = 0; j < 31; j++)
                 {
                     if (calendar[i, j])
-                    {
-                        day = daysCounter == 0 ? j : day;
-                        month = daysCounter == 0 ? i + 1 : month;
+                    {       //keep first date and count
+                        firstDay = daysCounter == 0 ? j : firstDay;
+                        firstMonth = daysCounter == 0 ? i + 1 : firstMonth;
                         daysCounter++;
                     }
 
                     if (daysCounter > 0 && !calendar[i, j])
-                    {
-                        int lastDate = day + daysCounter > 31 ? (day + daysCounter) % 31 : day + daysCounter;
-                        int lastMonth = day + daysCounter > 31 ? month + (day + daysCounter) / 32 : month;
-                        Console.WriteLine(day + "/" + month + " - " + lastDate + "/" + lastMonth);
+                    {       //when a swquence of days stops
+                        int lastDate = firstDay + daysCounter > 31 ? (firstDay + daysCounter) % 31 : firstDay + daysCounter;
+                        int lastMonth = firstDay + daysCounter > 31 ? firstMonth + (firstDay + daysCounter) / 32 : firstMonth;
+                        firstDay = daysCounter == 1 ? lastDate : firstDay;
+                        Console.WriteLine(firstDay + "/" + firstMonth + " - " + lastDate + "/" + lastMonth);
                         daysCounter = 0;
                     }
                 }
@@ -78,10 +83,9 @@ namespace part2
         }
 
         static private void PrintPercentOfOrderedDates()
-        {
-           // float x = (float)numOfOrderedDays / 372;
-            Console.WriteLine(numOfOrderedDays);
-            Console.WriteLine((100 * ((float)numOfOrderedDays / 372)));
+        {       //this function prints the number of ordered days and it's percent
+            Console.WriteLine("{0}{1}", "Number of ordered dates: ", numOfOrderedDays);
+            Console.WriteLine("{0}{1}", "Percent of ordered days: ", (100 * ((float)numOfOrderedDays / 372)));
         }
 
         static void Main(string[] args)
@@ -89,10 +93,10 @@ namespace part2
             int choise = 0;
             while (choise != 4)
             {
-                Console.WriteLine("enter 1 to order a holiday");
-                Console.WriteLine("enter 2 print date of orders");
-                Console.WriteLine("enter 3 to print sum days of orders");
-                Console.WriteLine("enter 4 to exit");
+                Console.WriteLine("Enter 1 to order a holiday");
+                Console.WriteLine("Enter 2 to print ordered dates");
+                Console.WriteLine("Enter 3 to print sum of ordered days");
+                Console.WriteLine("Enter 4 to exit");
                 int.TryParse(Console.ReadLine(), out choise);
 
                 switch (choise)
@@ -103,21 +107,5 @@ namespace part2
                 }
             }   
         }
-
-
-
-        
-
-   /*     static private void Print()
-        {
-            for(int i = 0; i < 12; i++)
-            {
-                for(int j = 0; j < 31; j++)
-                {
-                    Console.Write(calendar[i, j] + "  ");
-                }
-                Console.WriteLine("/n");
-            }              
-        }*/
     }
 }
