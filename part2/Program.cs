@@ -1,5 +1,5 @@
 ﻿//this program manages a calendar of holiday orders
-//students names: pinchas rozenberg, ID: 206190258. yaakov gottlieb, ID: 318807583
+//students names: pinchas rozenberg, ID: 206190258. yaakov gottlieb, ID: 8807583
 
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,10 @@ namespace part2
 {
     class Program
     {
-        static private bool[,] calendar = new bool[12, 31];
+        private const int DAYS_IN_MONTH = 31;
+        private const int MONTH_IN_YEAR = 12;
+
+        static private bool[,] calendar = new bool[MONTH_IN_YEAR, DAYS_IN_MONTH];
         static private int numOfOrderedDays = 0;
 
         static private bool SetDate(DateTime startDate, int numOfDays)
@@ -20,9 +23,9 @@ namespace part2
 
             for (int i = 0; i < numOfDays - 1; i++)
             {
-                if (!calendar[startDate.Month - 1 + (startDate.Day + i) / 31, (startDate.Day + i) % 31])
+                if (!calendar[startDate.Month - 1 + (startDate.Day + i) / DAYS_IN_MONTH, (startDate.Day + i) % DAYS_IN_MONTH])
                 {
-                    calendar[startDate.Month - 1 + (startDate.Day + i) / 31, (startDate.Day + i) % 31] = true;
+                    calendar[startDate.Month - 1 + (startDate.Day + i) / DAYS_IN_MONTH, (startDate.Day + i) % DAYS_IN_MONTH] = true;
                 }
                 else
                 {
@@ -59,9 +62,9 @@ namespace part2
             int daysCounter = 0;
             int firstMonth = 0, firstDay = 0;
 
-            for(int i = 0; i < 12; i++)
+            for(int i = 0; i < MONTH_IN_YEAR; i++)
             {
-                for(int j = 0; j < 31; j++)
+                for(int j = 0; j < DAYS_IN_MONTH; j++)
                 {
                     if (calendar[i, j])
                     {       //keep first date and count
@@ -72,8 +75,8 @@ namespace part2
 
                     if (daysCounter > 0 && !calendar[i, j])
                     {       //when a swquence of days stops
-                        int lastDate = firstDay + daysCounter > 31 ? (firstDay + daysCounter) % 31 : firstDay + daysCounter;
-                        int lastMonth = firstDay + daysCounter > 31 ? firstMonth + (firstDay + daysCounter) / 32 : firstMonth;
+                        int lastDate = firstDay + daysCounter > DAYS_IN_MONTH ? (firstDay + daysCounter) % DAYS_IN_MONTH : firstDay + daysCounter;
+                        int lastMonth = firstDay + daysCounter > DAYS_IN_MONTH ? firstMonth + (firstDay + daysCounter) / DAYS_IN_MONTH : firstMonth;
                         firstDay = daysCounter == 1 ? lastDate : firstDay;
                         Console.WriteLine(firstDay + "/" + firstMonth + " - " + lastDate + "/" + lastMonth);
                         daysCounter = 0;

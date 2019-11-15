@@ -1,4 +1,7 @@
-﻿using System;
+﻿//this program initializes 2 arrays and one more with the gap between the first 2
+//students names: pinchas rozenberg, ID: 206190258. yaakov gottlieb, ID: 318807583
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +12,7 @@ namespace part1
     class Program
     {
         static public void Print(int[] arr)
-        {
+        {       //this function prints an array
             foreach (var i in arr)
             {
                 Console.Write(i.ToString().PadLeft(4));
@@ -31,7 +34,7 @@ namespace part1
             }
 
             for (int i = 0; i < C.Length; i++)
-            {
+            {       //new array with tha gap between the first 2
                 C[i] = Math.Abs(A[i] - B[i]);
             }
 
