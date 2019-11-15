@@ -14,7 +14,7 @@ namespace part2
 
         static private bool SetDate(DateTime startDate, int numOfDays)
         {
-            for (int i = 1; i < numOfDays; i++)
+            for (int i = 1; i < numOfDays; i++) //אני משנה: במקום "(int i = 1; i < numOfDays; i++)" אני רושם:
             {
                 if (!calendar[startDate.Month - 1 + (startDate.Day + i - 1) / 31, (startDate.Day + i - 1) % 31])
                 {
@@ -33,8 +33,9 @@ namespace part2
             DateTime startDate;
             int numOfDays;
 
-            Console.WriteLine("Enter a date and number of days: ");
-            DateTime.TryParse(Console.ReadLine(), out startDate);  
+            Console.WriteLine("Enter a date:");
+            DateTime.TryParse(Console.ReadLine(), out startDate); 
+             Console.WriteLine("Enter a number of days:");
             int.TryParse(Console.ReadLine(), out numOfDays);
             numOfOrderedDays += numOfDays;
             
@@ -78,9 +79,9 @@ namespace part2
 
         static private void PrintPercentOfOrderedDates()
         {
-            float x = numOfOrderedDays / 372;
+           // float x = (float)numOfOrderedDays / 372;
             Console.WriteLine(numOfOrderedDays);
-            Console.WriteLine((100 * x));
+            Console.WriteLine((100 * ((float)numOfOrderedDays / 372)));
         }
 
         static void Main(string[] args)
@@ -89,9 +90,9 @@ namespace part2
             while (choise != 4)
             {
                 Console.WriteLine("enter 1 to order a holiday");
-                Console.WriteLine("enter 2");
-                Console.WriteLine("enter3");
-                Console.WriteLine("enter 4");
+                Console.WriteLine("enter 2 print date of orders");
+                Console.WriteLine("enter 3 to print sum days of orders");
+                Console.WriteLine("enter 4 to exit");
                 int.TryParse(Console.ReadLine(), out choise);
 
                 switch (choise)
@@ -107,7 +108,7 @@ namespace part2
 
         
 
-        static private void Print()
+   /*     static private void Print()
         {
             for(int i = 0; i < 12; i++)
             {
@@ -117,6 +118,6 @@ namespace part2
                 }
                 Console.WriteLine("/n");
             }              
-        }
+        }*/
     }
 }
